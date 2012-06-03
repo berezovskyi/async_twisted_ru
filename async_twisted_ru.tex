@@ -1,13 +1,30 @@
-
 \documentclass[12pt,a4paper]{article}
+\usepackage{xecyr}
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+\usepackage{fancyvrb}
+
+\usepackage{indentfirst}
+
+\usepackage[margin=.7in]{geometry}
+\setlength{\oddsidemargin}{0in}
+%\setlength{\evensidemargin}{0.0in}
+
 \usepackage{amsmath}
 \usepackage{mathtext}
 \usepackage{hyperref}
-\usepackage{ucs}
+%\usepackage{ucs}
 %\usepackage[t2a]{fontenc}
-\usepackage[utf8x]{inputenc}
-\usepackage[english,russian]{babel}
+%\usepackage[utf8x]{inputenc}
+%\usepackage[english,russian]{babel}
 \usepackage{graphicx}
+
+\setmainfont[Mapping=tex-text]{Liberation Sans}
+\setmonofont{Inconsolata}
+\renewcommand\scriptsize{\@setfontsize\scriptsize\@ixpt{11pt}}
+%\setmathfont{Cambria Math}
+
 
 \title{Введение в асинхронное программирование и Twisted}
 
@@ -15,9 +32,13 @@
 
 \date{}
 
-\frenchspacing
+%\DefineVerbatimEnvironment{verbatim}{Verbatim}numbers=left,numbersep=5pt,frame=lines,framerule=0.8mm}
+
+\nonfrenchspacing
 
 \begin{document}
+
+%\fvset{numbers=left,numbersep=5pt,frame=lines,framerule=0.8mm, fontsize=\large}
   
 \maketitle
 \thispagestyle{empty}
