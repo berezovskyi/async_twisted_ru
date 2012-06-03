@@ -1,34 +1,30 @@
 \documentclass[12pt,a4paper]{article}
-\usepackage{xecyr}
-\usepackage{polyglossia}
+\usepackage{xecyr} % xelatex for cyrillic
+\usepackage{polyglossia} % xelatex alt for babel
 \setdefaultlanguage{russian}
 \setotherlanguage{english}
-\usepackage{fancyvrb}
+\usepackage{fancyvrb} % fancy verbatim, including line numbers etc
 
-\usepackage{indentfirst}
+\usepackage{indentfirst} % indent first para after chapter title
 
-\usepackage[margin=.7in]{geometry}
-\setlength{\oddsidemargin}{0in}
-%\setlength{\evensidemargin}{0.0in}
+\usepackage[margin=.7in]{geometry} % reduce margins
+\setlength{\oddsidemargin}{0in} % different margins
 
 \usepackage{amsmath}
 \usepackage{mathtext}
 \usepackage{hyperref}
-%\usepackage{ucs}
-%\usepackage[t2a]{fontenc}
-%\usepackage[utf8x]{inputenc}
-%\usepackage[english,russian]{babel}
 \usepackage{graphicx}
 
-\setmainfont[Mapping=tex-text]{Liberation Sans}
-\setmonofont{Inconsolata}
-\renewcommand\scriptsize{\@setfontsize\scriptsize\@ixpt{11pt}}
-%\setmathfont{Cambria Math}
+\setmainfont[Mapping=tex-text]{Liberation Sans} % set text font
+\setmonofont{Inconsolata} % set mono font
+
+% has no effect
+%\renewcommand\scriptsize{\@setfontsize\scriptsize\@ixpt{11pt}}
 
 
 \title{Введение в асинхронное программирование и Twisted}
 
-\author{Dave Peticolas\\перевод Nina Evseenko}
+\author{Dave Peticolas\\перевод Nina Evseenko\\верстка Андрей Березовский}
 
 \date{}
 
