@@ -55,9 +55,9 @@ git репозиторий, то рекомендуется использова
 включает исходники рисунков в формате SVG. 
 Клонировать репозиторий можно следующим образом: 
 
-\begin{scriptsize}\begin{verbatim}
+\begin{verbatim}
 git clone git://github.com/jdavisp3/twisted-intro.git
-\end{verbatim}\end{scriptsize}
+\end{verbatim}
 
 И последнее предположение: наличие нескольких консолей, 
 открытых в директории с примерами (в одной из них предполагается 
@@ -88,9 +88,9 @@ git clone git://github.com/jdavisp3/twisted-intro.git
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/blocking-server/slowpoetry.py}{blocking-server/slowpoetry.py}. 
 Вы можете запустить пример сервера следующим образом:
 
-\begin{scriptsize}\begin{verbatim}
+\begin{verbatim}
 python blocking-server/slowpoetry.py poetry/ecstasy.txt
-\end{verbatim}\end{scriptsize}
+\end{verbatim}
 
 
 Эта команда запустит блокирующий сервер с 
@@ -105,9 +105,9 @@ python blocking-server/slowpoetry.py poetry/ecstasy.txt
 \textit{\symbol{45}\symbol{45}delay}. Например, чтобы 
 отправлять 50 байт каждые 5 секунд, нужно запустить: 
 
-\begin{scriptsize}\begin{verbatim}
+\begin{verbatim}
 python blocking-server/slowpoetry.py --num-bytes 50 --delay 5 poetry/ecstasy.txt
-\end{verbatim}\end{scriptsize}
+\end{verbatim}
 
 
 Когда сервер запускается, он печатает номер порта, который он 
@@ -116,17 +116,17 @@ python blocking-server/slowpoetry.py --num-bytes 50 --delay 5 poetry/ecstasy.txt
 тот же порт, что и до этого, для того, чтобы не нужно было 
 перенастраивать клиент. Вы можете задать определенный порт следующим образом:
 
-\begin{scriptsize}\begin{verbatim}
+\begin{verbatim}
 python blocking-server/slowpoetry.py --port 10000 poetry/ecstasy.txt
-\end{verbatim}\end{scriptsize}
+\end{verbatim}
 
 Если у вас есть программа 
 \href{http://netcat.sourceforge.net/}{netcat} (или nc), можно протестировать 
 запущенный сервер следующим образом:
 
-\begin{scriptsize}\begin{verbatim}
+\begin{verbatim}
 netcat localhost 10000
-\end{verbatim}\end{scriptsize}
+\end{verbatim}
 
 
 При запущенном сервере вы увидите медленно ползущую 
@@ -173,11 +173,11 @@ netcat localhost 10000
 Сначала мы запустим три сервера, обслуживающих три 
 различных поэмы:
 
-\begin{scriptsize}\begin{verbatim}
+\begin{verbatim}
 python blocking-server/slowpoetry.py --port 10000 poetry/ecstasy.txt --num-bytes 30
 python blocking-server/slowpoetry.py --port 10001 poetry/fascination.txt
 python blocking-server/slowpoetry.py --port 10002 poetry/science.txt
-\end{verbatim}\end{scriptsize}
+\end{verbatim}
 
 
 Вы можете выбрать другие номера портов, если те, 
@@ -194,9 +194,9 @@ python blocking-server/slowpoetry.py --port 10002 poetry/science.txt
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/blocking-client/get-poetry.py}{blocking-client/get-poetry.py}, 
 для того, чтобы скачать немного поэзии. Запустите клиент следующим образом:
 
-\begin{scriptsize}\begin{verbatim}
+\begin{verbatim}
 python blocking-client/get-poetry.py 10000 10001 10002
-\end{verbatim}\end{scriptsize}
+\end{verbatim}
 
 
 Вы также можете поменять номера портов, если сервера 
@@ -207,7 +207,7 @@ python blocking-client/get-poetry.py 10000 10001 10002
 следующую поэму. Вместо печати поэм, блокирующий клиент 
 выводит нечто вроде: 
 
-\begin{scriptsize}\begin{verbatim}
+\begin{verbatim}
 Task 1: get poetry from: 127.0.0.1:10000
 Task 1: got 3003 bytes of poetry from 127.0.0.1:10000 in 0:00:10.126361
 Task 2: get poetry from: 127.0.0.1:10001
@@ -215,7 +215,7 @@ Task 2: got 623 bytes of poetry from 127.0.0.1:10001 in 0:00:06.321777
 Task 3: get poetry from: 127.0.0.1:10002
 Task 3: got 653 bytes of poetry from 127.0.0.1:10002 in 0:00:06.617523
 Got 3 poems in 0:00:23.065661
-\end{verbatim}\end{scriptsize}
+\end{verbatim}
 
 Это очень похоже на текстовую версию рисунка \ref{fig:sync}, где 
 каждая задача качает одну поэму. В вашем выводе времена скачиваний  
@@ -242,14 +242,14 @@ Twisted. Сначала давайте его запустим. Запустит
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/async-client/get-poetry.py}{async-client/get-poetry.py},  
 как написано ниже:
 
-\begin{scriptsize}\begin{verbatim}
+\begin{verbatim}
 python async-client/get-poetry.py 10000 10001 10002
-\end{verbatim}\end{scriptsize}
+\end{verbatim}
 
 
 В результате получится примерно такой вывод:
 
-\begin{scriptsize}\begin{verbatim}
+\begin{verbatim}
 Task 1: got 30 bytes of poetry from 127.0.0.1:10000
 Task 2: got 10 bytes of poetry from 127.0.0.1:10001
 Task 3: got 10 bytes of poetry from 127.0.0.1:10002
@@ -260,7 +260,7 @@ Task 1: 3003 bytes of poetry
 Task 2: 623 bytes of poetry
 Task 3: 653 bytes of poetry
 Got 3 poems in 0:00:10.133169
-\end{verbatim}\end{scriptsize}
+\end{verbatim}
 
 На этот раз вывод намного длиньше, поскольку клиент выводит 
 строку после каждого скачивания порции данных с любого сервера. 
