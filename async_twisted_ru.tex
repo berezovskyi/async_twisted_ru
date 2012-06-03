@@ -1,15 +1,12 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{xecyr} % xelatex for cyrillic
+
 \usepackage{polyglossia} % xelatex alt for babel
 \setdefaultlanguage{russian}
 \setotherlanguage{english}
+
 \usepackage{fancyvrb} % fancy verbatim, including line numbers etc
-
 \usepackage{indentfirst} % indent first para after chapter title
-
-\usepackage[margin=.7in]{geometry} % reduce margins
-\setlength{\oddsidemargin}{0in} % different margins
-
 \usepackage{amsmath}
 \usepackage{mathtext}
 \usepackage{hyperref}
@@ -18,23 +15,16 @@
 \setmainfont[Mapping=tex-text]{Liberation Sans} % set text font
 \setmonofont{Inconsolata} % set mono font
 
-% has no effect
-%\renewcommand\scriptsize{\@setfontsize\scriptsize\@ixpt{11pt}}
-
-
 \title{Введение в асинхронное программирование и Twisted}
-
 \author{Dave Peticolas\\перевод Nina Evseenko\\верстка Андрей Березовский}
-
 \date{}
 
+\usepackage[margin=.7in]{geometry} % reduce margins
+\setlength{\oddsidemargin}{0in} % different margins
 \DefineVerbatimEnvironment{verbatim}{Verbatim}{numbers=left,numbersep=3pt,frame=single,framerule=0.4mm}
-
 \nonfrenchspacing
- \setlength{\parskip}{2mm plus2mm minus1mm}
+\setlength{\parskip}{2mm plus2mm minus1mm}
 \begin{document}
-
-%\fvset{numbers=left,numbersep=5pt,frame=lines,framerule=0.8mm, fontsize=\large}
   
 \maketitle
 \thispagestyle{empty}
