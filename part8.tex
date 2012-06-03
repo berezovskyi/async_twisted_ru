@@ -18,7 +18,7 @@
 Вместо этого она возвращает новый deferred, к которому пользователь 
 может прикрепить необходимые callback'и и errback'и.
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def get_poetry(host, port):
     """
     Download a poem from the given host and port. This function
@@ -30,7 +30,7 @@ def get_poetry(host, port):
     factory = PoetryClientFactory(d)
     reactor.connectTCP(host, port, factory)
     return d
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 %Our factory object is initialized with a deferred instead of a callback/errback pair. Once we have the poem, or we find out we couldn’t connect to the server, the deferred is fired with either a poem or a failure:
 Наш объект  
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-client-4/get-poetry.py#L65}{factory}  
@@ -39,7 +39,7 @@ def get_poetry(host, port):
 обнаружили, что не можем присоединиться к серверу, deferred 
 активизируется либо поэмой, либо ошибкой: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class PoetryClientFactory(ClientFactory):
 
     protocol = PoetryProtocol
@@ -56,7 +56,7 @@ class PoetryClientFactory(ClientFactory):
         if self.deferred is not None:
             d, self.deferred = self.deferred, None
             d.errback(reason)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %Notice the way we release our reference to the deferred after it is fired. This is a pattern found in several places in the Twisted source code and helps to ensure we do not fire the same deferred twice. It makes life a little easier for the Python garbage collector, too.
@@ -71,7 +71,7 @@ deferred дважды. Это также упрощает работу сбор�
 И снова, нет необходимости менять PoetryProtocol, он хорош 
 как есть. Все, что осталось - обновить функцию poetry\_main: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def poetry_main():
     addresses = parse_args()
 
@@ -101,7 +101,7 @@ def poetry_main():
 
     for poem in poems:
         print poem
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %Notice how we take advantage of the chaining capabilities of the deferred to refactor the poem_done invocation out of our primary callback and errback.
@@ -225,7 +225,7 @@ deferred'ы делают всю работу. Если вы читали вве�
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-client-4/get-poetry-stack.py}{twisted-client-4/get-poetry-stack.py} с адресом запущенного поэтического сервера. 
 Вы получите следующий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
   File "twisted-client-4/get-poetry-stack.py", line 129, in
     poetry_main()
   File "twisted-client-4/get-poetry-stack.py", line 122, in poetry_main
@@ -245,7 +245,7 @@ deferred'ы делают всю работу. Если вы читали вве�
 
   File "twisted-client-4/get-poetry-stack.py", line 105, in got_poem
     traceback.print_stack()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %That’s pretty similar to the stack trace we created for client 2.0. We can visualize the latest trace in Figure 14:
 Это очень похоже на stack trace, который мы создали для клиента 2.0. 

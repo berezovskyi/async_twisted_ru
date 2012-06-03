@@ -120,7 +120,7 @@ deferred'х и реализуем заново наш поэтический к�
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-client-6/get-poetry.py#L85}{Protocol} 
 трансформирующего клиента:
 
-\begin{scriptsize}\begin{verbatim} 
+ \begin{verbatim} 
 class TransformClientProtocol(NetstringReceiver):
 
     def connectionMade(self):
@@ -135,7 +135,7 @@ class TransformClientProtocol(NetstringReceiver):
 
     def poemReceived(self, poem):
         self.factory.handlePoem(poem)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Используя NetstringReceiver как базовый класс 
@@ -146,7 +146,7 @@ class TransformClientProtocol(NetstringReceiver):
 обратно, мы подставляем его в factory для обработки. 
 Далее следует код для TransformClientFactory:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class TransformClientFactory(ClientFactory):
 
     protocol = TransformClientProtocol
@@ -166,7 +166,7 @@ class TransformClientFactory(ClientFactory):
             d.errback(reason)
 
     clientConnectionFailed = clientConnectionLost
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Эта factory спроектирована для клиентов и управляет 
@@ -201,7 +201,7 @@ Twisted программировании, поэтому подчеркнем э
 который прячет детали создания TCP соединения к определенному 
 трансформирующему сервису:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class TransformProxy(object):
     """
     I proxy requests to a transformation service.
@@ -216,7 +216,7 @@ class TransformProxy(object):
         from twisted.internet import reactor
         reactor.connectTCP(self.host, self.port, factory)
         return factory.deferred
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Этот класс представляет единственный интерфейс xform(), 
@@ -229,7 +229,7 @@ class TransformProxy(object):
 Оставшаяся часть программы не изменилась, за исключением 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-client-6/get-poetry.py#L163}{try\_to\_cummingsify} callback'а:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
     def try_to_cummingsify(poem):
         d = proxy.xform('cummingsify', poem)
 
@@ -238,7 +238,7 @@ class TransformProxy(object):
             return poem
 
         return d.addErrback(fail)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Этот callback теперь возвращает deferred, но 
@@ -255,10 +255,10 @@ deferred'а (возвращаемого get\_poetry),
 addCallback и addErrback возвращают оригинальный deferred. Мы могли 
 бы написать двустрочный эквивалент:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
         d.addErrback(fail)
         return d
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 \subsection{Тестирование клиента}
 
@@ -268,23 +268,23 @@ addCallback и addErrback возвращают оригинальный deferred
 сервис, запущенный на порту 10001, и два поэтических сервера, запущенных на 
 портах 10002 и 10003, вы бы запустили:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-client-6/get-poetry.py 10001 10002 10003
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Для того, чтобы скачать две поэмы и обе их трансформировать, 
 вы можете запустить трансформирующий сервер следующим образом:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-server-1/tranformedpoetry.py --port 10001
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 И поэтические сервера так:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-server-1/fastpoetry.py --port 10002 poetry/fascination.txt
 python twisted-server-1/fastpoetry.py --port 10003 poetry/science.txt
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %Then you can run the poetry client as above. After that, try crashing the transform server and re-running the client with the same command.

@@ -102,22 +102,22 @@ Twisted программе может испортить все то, что
 поток при вызове метода, который каждый раз
 приносит следующую порцию поэмы:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 dataReceived(self, "When I have fears")
 dataReceived(self, " that I may cease to be")
 dataReceived(self, "Before my pen has glea")
 dataReceived(self, "n'd my teeming brain")
 ...
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %While this isn’t strictly speaking an actual Python loop, we can conceptualize it as one:
 Поскольку это похоже на цикл в Python'е, 
 мы можем концептуализировать это так:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 for data in poetry_stream(): # pseudo-code
     dataReceived(data)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %We can envision this “callback loop” in Figure 41:
 Мы можем представить себе это "цикл обратных вызовов" на 
@@ -261,7 +261,7 @@ Erlang обрабатывает и исполняет код.
 которая служит тем же целям, что и функция main для 
 наших клиентов, написанных на Python'е:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 main([]) ->
     usage();
 
@@ -272,7 +272,7 @@ main(Args) ->
      || {TaskNum, Addr} <- enumerate(Addresses)],
     collect_poems(length(Addresses), []).
 
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %If you’ve never seen Prolog or a similar language before then Erlang syntax is going to seem a little odd. But some people say that about Python, too. The main function is defined by two separate clauses, separated by a semicolon. Erlang chooses which clause to run by matching the arguments, so the first clause only runs if we execute the client without providing any command line arguments, and it just prints out a help message. The second clause is where all the action is.
 Если вы никогда раньше не видели Prolog или подобный 
@@ -299,10 +299,10 @@ main определены два отдельных условия, которы
 вы можете подумать о ней как об эквиваленте модуля \_\_main\_\_ в Python'е. 
 Третья строчка гораздо интересней: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 [erlang:spawn_monitor(fun () -> get_poetry(TaskNum, Addr, Main) end)
      || {TaskNum, Addr} <- enumerate(Addresses)],
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %This statement is an Erlang list comprehension, with a syntax similar to that in Python. It is spawning new Erlang processes, one for each poetry server we need to contact. And each process will run the same function (get\_poetry) but with different arguments specific to that server. We also pass the PID of the main process so the new processes can send the poetry back (you generally need the PID of a process to send a message to it).
@@ -335,13 +335,13 @@ main определены два отдельных условия, которы
 и \textit{get\_poetry/4}, которые соответственно принимают три и четыре аргумента. 
 Далее функция \textit{get\_poetry/3}, которая порождается \textit{main}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 get_poetry(Tasknum, Addr, Main) ->
     {Host, Port} = Addr,
     {ok, Socket} = gen_tcp:connect(Host, Port,
                                    [binary, {active, false}, {packet, 0}]),
     get_poetry(Tasknum, Socket, Main, []).
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %This function first makes a TCP connection, just like the Twisted client get\_poetry. But then, instead of returning, it proceeds to use that TCP connection by calling get\_poetry/4, listed below:
@@ -350,7 +350,7 @@ get_poetry(Tasknum, Addr, Main) ->
 продолжает использоваться в вызове \textit{get\_poetry/4}, 
 показанной ниже:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 get_poetry(Tasknum, Socket, Main, Packets) ->
     case gen_tcp:recv(Socket, 0) of
         {ok, Packet} ->
@@ -360,7 +360,7 @@ get_poetry(Tasknum, Socket, Main, Packets) ->
         {error, _} ->
             Main ! {poem, list_to_binary(lists:reverse(Packets))}
     end.
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %This Erlang function is doing the work of the PoetryProtocol from our Twisted client, except it does so using blocking function calls. The gen\_tcp:recv function waits until some data arrives on the socket (or the socket is closed), however long that might be. But a “blocking” function in Erlang only blocks the process running the function, not the entire Erlang runtime. That TCP socket isn’t really a blocking socket (you can’t make a true blocking socket in pure Erlang code). For each of those Erlang sockets there is, somewhere inside the Erlang runtime, a “real” TCP socket set to non-blocking mode and used as part of a select loop.
 Эта Erlang функция выполняет работу \textit{PoetryProtocol} 
@@ -412,7 +412,7 @@ Twisted клиентами. В Twisted клиенте, <<виртуальные>
 Оставшаяся ключевая функция нашего Erlang клиента это 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/erlang-client-1/get-poetry#L58}{collect\_poems}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 collect_poems(0, Poems) ->
     [io:format("~s\n", [P]) || P <- Poems];
 collect_poems(N, Poems) ->
@@ -422,7 +422,7 @@ collect_poems(N, Poems) ->
         {poem, Poem} ->
             collect_poems(N, [Poem|Poems])
     end.
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %This function is run by the main process and, like get\_poetry, it recursively loops on itself. It also blocks. The receive statement tells the process to wait for a message to arrive that matches one of the given patterns, and then extract the message from its “mailbox”.
@@ -445,11 +445,11 @@ collect_poems(N, Poems) ->
 Хорошо, давайте  запустим Erlang клиент. Сначала запустим три медленных 
 поэтических сервера:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python blocking-server/slowpoetry.py --port 10001 poetry/fascination.txt
 python blocking-server/slowpoetry.py --port 10002 poetry/science.txt
 python blocking-server/slowpoetry.py --port 10003 poetry/ecstasy.txt --num-bytes 30
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %Now we can run the Erlang client, which has a similar command-line syntax as the Python clients. If you are on a Linux or other UNIX-like system, then you should be able to run the client directly (assuming you have Erlang installed and available in your PATH). On Windows you will probably need to run the escript program, with the path to th Erlang client as the first argument (with the remaining arguments for the Erlang client itself).
@@ -463,19 +463,19 @@ Erlang и он доступен по вашей переменной окруж�
 Erlang клиенту в качестве первого аргумента (и с остальными 
 аргументами для самого Erlang клиента).
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 ./erlang-client-1/get-poetry 10001 10002 10003
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %After that you should see output like this:
 После запуска вы увидите примерно следующее:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Task 3: got 30 bytes of poetry from 127:0:0:1:10003
 Task 2: got 10 bytes of poetry from 127:0:0:1:10002
 Task 1: got 10 bytes of poetry from 127:0:0:1:10001
 ...
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %This is just like one of our earlier Python clients where we print a message for each little bit of poetry we get. When all the poems have finished the client should print out the complete text of each one. Notice the client is switching back and forth between all the servers depending on which one has some poetry to send.
 Это похоже на вывод одного из наших ранних Python 
@@ -502,9 +502,9 @@ Task 1: got 10 bytes of poetry from 127:0:0:1:10001
 %So what happens if one of those servers is down? Let’s try it:
 Так что же случается, если один из этих серверов не доступен? 
 Давайте попробуем следующее:
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 ./erlang-client-1/get-poetry 10001 10005
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %The above command contains one active port (assuming you left all the earlier poetry servers running) and one inactive port (assuming you aren’t running any server on port 10005). And we get some output like this:
@@ -514,7 +514,7 @@ Task 1: got 10 bytes of poetry from 127:0:0:1:10001
 никакого сервера на порту 10005). И мы получаем некоторый вывод 
 подобный приведенному ниже:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Task 1: got 10 bytes of poetry from 127:0:0:1:10001
 
 =ERROR REPORT==== 25-Sep-2010::21:02:10 ===
@@ -523,7 +523,7 @@ Error in process <0.33.0> with exit value: {{badmatch,{error,econnrefused}},[{er
 Task 1: got 10 bytes of poetry from 127:0:0:1:10001
 Task 1: got 10 bytes of poetry from 127:0:0:1:10001
 ...
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %And eventually the client finishes downloading the poem from the active server, prints out the poem, and exits. So how did the main function know that both processes were done? That error message is the clue. The error happens when get\_poetry tries to connect to the server and gets a connection refused error instead of the expected value ({ok, Socket}). The resulting exception is called badmatch because Erlang “assignment” statements are really pattern-matching operations.
 Под конец клиент завершает скачивание поэмы из 

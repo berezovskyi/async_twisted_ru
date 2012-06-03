@@ -47,7 +47,7 @@
 
 В примере \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-list/deferred-list-1.py#L1}{deferred-list/deferred-list-1.py} вы найдете следующий код:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def got_results(res):
@@ -57,15 +57,15 @@ print 'Empty List.'
 d = defer.DeferredList([])
 print 'Adding Callback.'
 d.addCallback(got_results)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Если вы запустите, то получите следующий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Empty List.
 Adding Callback.
 We got: []
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Нужно отметить следующее:
 
@@ -90,7 +90,7 @@ We got: []
 Давайте теперь помотрим на 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-list/deferred-list-2.py#L1}{deferred-list/deferred-list-2.py}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def got_results(res):
@@ -103,18 +103,18 @@ print 'Adding Callback.'
 d.addCallback(got_results)
 print 'Firing d1.'
 d1.callback('d1 result')
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Теперь мы создаем DeferredList с одним элементом в 
 списке. Получаем следующий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 One Deferred.
 Adding Callback.
 Firing d1.
 We got: [(True, 'd1 result')]
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Нужно отметить следующее:
 
@@ -133,7 +133,7 @@ We got: [(True, 'd1 result')]
 Давайте попробуем добавить два deferred'а в список(
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-list/deferred-list-1.py#L3}{deferred-list/deferred-list-3.py}):
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def got_results(res):
@@ -149,17 +149,17 @@ print 'Firing d1.'
 d1.callback('d1 result')
 print 'Firing d2.'
 d2.callback('d2 result')
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Вывод следующий:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Two Deferreds.
 Adding Callback.
 Firing d1.
 Firing d2.
 We got: [(True, 'd1 result'), (True, 'd2 result')]
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 С этого момента достаточно ясен результат DeferredList, 
@@ -178,7 +178,7 @@ DeferredList, созданный с пустым списком, активиз�
 Что по поводу порядка резульатов в списке с результатами? 
 Рассмотрим \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-list/deferred-list-4.py#L1}{deferred-list/deferred-list-4.py}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def got_results(res):
@@ -194,19 +194,19 @@ print 'Firing d2.'
 d2.callback('d2 result')
 print 'Firing d1.'
 d1.callback('d1 result')
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 На этот раз мы активизировали сначала d2, а потом d1. Заметим, что 
 список deferred'ов все еще создается с d1 и d2 в их 
 первоначальном порядке. Далее вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Two Deferreds.
 Adding Callback.
 Firing d2.
 Firing d1.
 We got: [(True, 'd1 result'), (True, 'd2 result')]
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Результирующий список имеет результаты в то же самом порядке, что и 
@@ -220,7 +220,7 @@ We got: [(True, 'd1 result'), (True, 'd2 result')]
 завершились с ошибкой? И что здесь делают значения True? 
 Давайте попробуем пример \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-list/deferred-list-5.py#L1}{deferred-list/deferred-list-5.py}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def got_results(res):
@@ -234,17 +234,17 @@ print 'Firing d1.'
 d1.callback('d1 result')
 print 'Firing d2 with errback.'
 d2.errback(Exception('d2 failure'))
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Теперь мы активизировали d1 c положительным результатом, а 
 d2 - отрицательным. Игнорируя опцию consumerErrors, 
 мы вернемся к этому, вывод будет следующий:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Firing d1.
 Firing d2 with errback.
 We got: [(True, 'd1 result'), (False, <twisted.python.failure.Failure <type 'exceptions.Exception'>>)]
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Теперь кортеж соответсвующий d2 имеет Failure в качестве второго элемента и 
 False - в качестве первого. С этого момента должно быть достаточно понятно, как 
@@ -275,14 +275,14 @@ False - в качестве первого. С этого момента дол�
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-list/deferred-list-6.py#L1}{deferred-list/deferred-list-6.py}, в котором не используется эта опция, вывод получается такой:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Firing d1.
 Firing d2 with errback.
 We got: [(True, 'd1 result'), (False, >twisted.python.failure.Failure >type 'exceptions.Exception'<<)]
 Unhandled error in Deferred:
 Traceback (most recent call last):
 Failure: exceptions.Exception: d2 failure
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Если вы вспомните, то сообщение ``Unhandled error in Deferred'' 
@@ -322,7 +322,7 @@ deferred'а, возвратит None, таким образом потребля
 найти в \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-client-8/get-poetry.py#L1}{twisted-client-8/get-poetry.py}. Изменения коснулись только poetry\_main. Давайте 
 посмотрим на важные изменения:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
     ...
     ds = []
 
@@ -333,7 +333,7 @@ deferred'а, возвратит None, таким образом потребля
 
     dlist = defer.DeferredList(ds, consumeErrors=True)
     dlist.addCallback(lambda res : reactor.stop())
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 В клиенте 8.0 вам не нужен callback poem\_done или 

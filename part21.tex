@@ -55,9 +55,9 @@
 функцию \textit{head}, которая получает первый элемент из списка \textit{[1,2,3]} (Haskell и 
 Python имеют общий синтаксис для списка): 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
   head [1,2,3]
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %If you install the GHC Haskell runtime, you can try this out yourself:
@@ -65,7 +65,7 @@ Python имеют общий синтаксис для списка):
 \href{http://www.haskell.org/ghc/}{GHC Haskell}, вы можете 
 попробовать это сами:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 [~] ghci
 GHCi, version 6.12.1: http://www.haskell.org/ghc/  : ? for help
 Loading package ghc-prim ... linking ... done.
@@ -74,7 +74,7 @@ Loading package base ... linking ... done.
 Prelude> head [1,2,3]
 1
 Prelude>
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %The result is the number 1, as expected.
@@ -89,14 +89,14 @@ Prelude>
 представляют (концептуально) бесконечные списки.   
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Prelude> [2,4 ..]
 [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,
 32,34,36,38,40,42,44,46,48,50,52,54,56,58,
 60,62,64,66,68,70,72,74,76,78,80,82,84,86,
 88,90,92,94,96,98,100,102,104,106,108,110,
 ...
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %You'll have to press Ctrl-C to stop that computation as it will never actually terminate. But because of lazy evaluation, it is possible to use these infinite lists in Haskell with no trouble:
@@ -104,14 +104,14 @@ Prelude> [2,4 ..]
 как оно само не завершится. Ввиду ленивости вычислений, то можно без проблем 
 использовать эти бесконечные циклы в Haskell:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Prelude> head [2,4 ..]
 2
 Prelude> head (tail [2,4 ..])
 4
 Prelude> head (tail (tail [2,4 ..]))
 6
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %Here we are accessing the first, second, and third elements of this infinite list respectively, with no infinite loop anywhere in sight. This is the essence of lazy evaluation. Instead of first evaluating the entire list (which would cause an infinite loop) and then giving that list to the head function, the Haskell runtime only constructs as much of the list as it needs for head to finish its work. The rest of the list is never constructed at all, because it is not needed to proceed with the computation.
@@ -135,13 +135,13 @@ head завершила свою работу. Остальные элемент
 Далее некоторый код на Haskell, который частично отбрасывает три 
 различных бесконечных списка: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Prelude> let x = [1..]
 Prelude> let y = [2,4 ..]
 Prelude> let z = [3,6 ..]
 Prelude> head (tail (tail (zip3 x y z)))
 (3,6,9)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %Here we zip all the lists together, then grab the head of the tail of the tail. Once again, Haskell has no trouble with this and only constructs as much of each list as it needs to finish evaluating our code. We can visualize the Haskell runtime “consuming” these infinite lists in Figure 46:
@@ -228,9 +228,9 @@ Haskell также поддерживает легковесные потоки 
 %The getPoetry function includes this line:
 Функция \textit{getPoetry} включает следующую строчку:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 poem <- hGetContents h
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %which appears to be reading the entire poem from the handle (i.e., the TCP socket) at once. But Haskell, as usual, is lazy. And the Haskell runtime includes one or more actual threads which perform asynchronous I/O in a select loop, thus preserving the possibilities for lazy evaluation of I/O streams.
@@ -252,32 +252,32 @@ poem <- hGetContents h
 неуместен в Haskell программе. Но это не важно, мы почистим это немного, 
 давайте запустим Haskell клиент. Запустите медленные серверы: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python blocking-server/slowpoetry.py --port 10001 poetry/fascination.txt
 python blocking-server/slowpoetry.py --port 10002 poetry/science.txt
 python blocking-server/slowpoetry.py --port 10003 poetry/ecstasy.txt --num-bytes 30
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %Now compile the Haskell client:
 Теперь скомпилируйте Haskell клиент:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 cd haskell-client-1/
 ghc --make get-poetry.hs
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %This will create a binary called get-poetry. Finally, run the client against our servers:
 Появится исполняемый файл с названием get-poetry. И наконец, 
 запустите клиент для наших серверов: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 ./get-poetry 10001 10002 1000
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %And you should see some output like this:
 И вы увидите следующий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Task 3: got 12 bytes of poetry from localhost:10003
 Task 3: got 1 bytes of poetry from localhost:10003
 Task 3: got 30 bytes of poetry from localhost:10003
@@ -288,7 +288,7 @@ Task 3: got 29 bytes of poetry from localhost:10003
 Task 1: got 36 bytes of poetry from localhost:10001
 Task 1: got 1 bytes of poetry from localhost:10001
 ...
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %The output is slightly different than previous asynchronous clients because we are printing one line for each line of poetry instead of each arbitrary chunk of data. But, as you can see, the client is clearly processing data from all the servers together, instead of one after the other. You’ll also notice that the client prints out the first poem as soon as it’s finished, without waiting for the others, which continue on at their own pace.
@@ -314,17 +314,17 @@ Task 1: got 1 bytes of poetry from localhost:10001
 %Ok, let’s compile a new client:
 Хорошо, давайте скомпилируем новый клиент:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 cd haskell-client-2/
 ghc --make get-poetry.hs
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %And run it against the same set of poetry servers:
 И запустим для того же множества поэтических серверов:
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 ./get-poetry 10001 10002 10003
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %And you should see the text of each poem appear, eventually, on the screen.

@@ -22,16 +22,16 @@
 найти в директории с примерами в файле    
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/basic-twisted/simple.py}{basic-twisted/simple.py}. 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import reactor
 reactor.run()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Пример запускается следующим образом:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python basic-twisted/simple.py
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 В предыдущей главе мы выяснили, что Twisted - реализация шаблона проектирования 
 \href{http://en.wikipedia.org/wiki/Reactor\_pattern}{Reactor}, 
@@ -94,10 +94,10 @@ select.
 импортирования twisted.internet.reactor. Вот так можно 
 установить pollreactor:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import pollreactor
 pollreactor.install()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Если проимпортировать twisted.internet.reactor без 
@@ -120,13 +120,13 @@ reactor мог бы подставляться как ссылка, а не ка
 используя pollreactor, которую можно найти в 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/basic-twisted/simple-poll.py}{basic-twisted/simple-poll.py}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import pollreactor
 pollreactor.install()
 
 from twisted.internet import reactor
 reactor.run()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Таким образом, мы имеем poll цикл, который ничего не делает, вместо 
 ничего не делающего select цикла. 
@@ -142,7 +142,7 @@ reactor.run()
 Например, программу, печатающую сообщение в окне терминала, 
 после запуска цикла реактора:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def hello():
     print 'Hello from the reactor loop!'
     print 'Lately I feel like I\'m stuck in a rut.'
@@ -153,17 +153,17 @@ reactor.callWhenRunning(hello)
 
 print 'Starting the reactor.'
 reactor.run()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Код программы находится в 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/basic-twisted/hello.py}{basic-twisted/hello.py}. 
 После запуска получится следующий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Starting the reactor.
 Hello from the reactor loop!
 Lately I feel like I'm stuck in a rut.
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Программу выше все еще надо завершать самостоятельно, 
 поскольку она бесконечно выполняется после того, как напечатает 
@@ -194,7 +194,7 @@ reactor.
 Мы можем увидеть то, как Twisted вызывает наш код, 
 используя следующую программу:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 import traceback
 
 def stack():
@@ -204,14 +204,14 @@ def stack():
 from twisted.internet import reactor
 reactor.callWhenRunning(stack)
 reactor.run()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Код находится в 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/basic-twisted/stack.py}{basic-twisted/stack.py}, 
 и он напечатает что-то вроде этого:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 The python stack:
 ...
   reactor.run() <-- This is where we called the reactor
@@ -219,7 +219,7 @@ The python stack:
 ...  <-- A bunch of Twisted function calls
 ...
   traceback.print_stack() <-- The second line in the stack function
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Не обращайте внимание на все строки, просто 
@@ -324,7 +324,7 @@ reactor один раз.
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/basic-twisted/countdown.py}{basic-twisted/countdown.py}, 
 которая останавливает reactor примерно через 5 секунд: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class Countdown(object):
 
     counter = 5
@@ -345,7 +345,7 @@ reactor.callWhenRunning(Countdown().count)
 print 'Start!'
 reactor.run()
 print 'Stop!'
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Программа использует API callLater для регистрации callback'а с 
@@ -379,7 +379,7 @@ callback'и будут вызваны в нужное время или в пр�
 
 Далее вывод программы выше:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Start!
 5 ...
 4 ...
@@ -387,7 +387,7 @@ Start!
 2 ...
 1 ...
 Stop!
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Заметьте, что строка "Stop!" в конце показывает нам, что, 
@@ -404,7 +404,7 @@ callback генерирует исключение. Давайте попроб�
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/basic-twisted/exception.py}{basic-twisted/exception.py} 
 в одном callback'е генерируется исключение, в другом код выполняется нормально:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def falldown():
     raise Exception('I fall down.')
 
@@ -419,18 +419,18 @@ reactor.callWhenRunning(upagain)
 
 print 'Starting the reactor.'
 reactor.run()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Если вы запустите это, то увидите следующее:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Starting the reactor.
 Traceback (most recent call last):
   ... # I removed most of the traceback
 exceptions.Exception: I fall down.
 But I get up again.
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Заметьте, что второй callback запустился после первого, хотя 

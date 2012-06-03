@@ -30,7 +30,7 @@
 лениво созданных последовательностей значений. Давайте посмотрим 
 на пример кода в inline-callbacks/gen-1.py:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def my_generator():
     print 'starting up'
     yield 1
@@ -42,7 +42,7 @@ def my_generator():
 
 for n in my_generator():
     print n
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Здесь мы имеем генератор, который создает последовательность 
@@ -54,7 +54,7 @@ for n in my_generator():
 Вы можете сделать этот код более явным 
 путем создания самого генератора (inline-callbacks/gen-2.py):
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def my_generator():
     print 'starting up'
     yield 1
@@ -73,7 +73,7 @@ while True:
         break
     else:
         print n
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Генератор --- это просто объект для получения последовательных значений. 
@@ -120,7 +120,7 @@ while True:
 inline-callbacks/gen-4.py иллюстрирует это свойство:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class Malfunction(Exception):
     pass
 
@@ -153,7 +153,7 @@ try:
     gen.next()
 except StopIteration:
     pass
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 В Python 2.5 и выше, оператор yield - выражение, 
@@ -219,7 +219,7 @@ deferred завершился с ошибкой). Это могло бы сде�
 
 Рассмотрим теперь пример inline-callbacks/inline-callbacks-1.py:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet.defer import inlineCallbacks, Deferred
 
 @inlineCallbacks
@@ -251,7 +251,7 @@ def my_callbacks():
 from twisted.internet import reactor
 reactor.callWhenRunning(my_callbacks)
 reactor.run()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Запустите пример, и вы увидите выполнение генератора, 
@@ -339,7 +339,7 @@ defer.returnValue. Подобно обычному оператору return,
 Можно сравнить с кодом клиента 6.0 в twisted-client-6/get-poetry.py. 
 Изменения в основном коснулись poetry\_main:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def poetry_main():
     addresses = parse_args()
 
@@ -381,7 +381,7 @@ def poetry_main():
         d.addBoth(poem_done)
 
     reactor.run()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 В новой версии генератор get\_transformed\_poem с декоратором 
@@ -398,22 +398,22 @@ try/except для управления асинхронными ошибками
 Мы можем проверить новый клиент так же как и раньше. 
 Сначала запустим трансформирующий сервер:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-server-1/tranformedpoetry.py --port 10001
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Затем запустим несколько поэтических серверов:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-server-1/fastpoetry.py --port 10002 poetry/fascination.txt
 python twisted-server-1/fastpoetry.py --port 10003 poetry/science.txt
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Теперь можно запустить новый клиент:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-client-7/get-poetry.py 10001 10002 10003
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Попробуйте отключить один или несколько серверов, для 
 того, чтобы посмотреть как клиент управляет ошибками.

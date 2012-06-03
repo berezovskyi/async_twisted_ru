@@ -29,7 +29,7 @@
 реализацию на Python'е со следующим интерфейсом:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class IByronificationEngine(Interface):
 
     def byronificate(poem):
@@ -38,7 +38,7 @@ class IByronificationEngine(Interface):
 
         Raises GibberishError if the input is not a genuine poem.
         """
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %Like most bleeding-edge software, the implementation has some bugs. This means that in addition to the documented exception, the byronificate method sometimes throws random exceptions when it hits a corner-case the professor forgot to handle.
@@ -98,7 +98,7 @@ class IByronificationEngine(Interface):
 Далее синхронная версия нашего кода:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 try:
     poem = get_poetry(host, port) # synchronous get_poetry
 except:
@@ -114,7 +114,7 @@ else:
         print poem
 
 sys.exit()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %This sketch of a program could be make simpler with some refactoring, but it illustrates the flow of logic pretty clearly. We want to update our most recent poetry client (which uses deferreds) to implement this same scheme. But we won’t do that until Part 10. For now, instead, let’s imagine how we might do this with client 3.1, our last client that didn’t use deferreds at all. Suppose we didn’t bother handling exceptions, but instead just changed the got_poem callback like this:
@@ -132,11 +132,11 @@ sys.exit()
 callback следующим образом:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def got_poem(poem):
     poems.append(byron_engine.byronificate(poem))
     poem_done()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %What happens when the byronificate method raises a GibberishError or some other exception? Looking at Figure 11 from Part 6, we can see that:
@@ -442,7 +442,7 @@ callback завершился с ошибкой? Если последний э�
 всегда генерирует исключение. Далее вывод программы:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Finished
 Unhandled error in Deferred:
 Traceback (most recent call last):
@@ -450,7 +450,7 @@ Traceback (most recent call last):
 --- <exception caught here> ---
   ...
 exceptions.Exception: oops
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 
@@ -644,19 +644,19 @@ callback и errback. Вы можете использовать терминал
 \item Используйте deferred симулятор для того, чтобы изучить отличие между этим кодом:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
       deferred.addCallbacks(my_callback, my_errback)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %      and this code:
 и этим кодом:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
       deferred.addCallback(my_callback)
       deferred.addErrback(my_errback)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %      Recall that the last two methods add implicit pass-through functions as one member of the pair. 

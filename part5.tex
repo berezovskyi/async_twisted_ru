@@ -293,7 +293,7 @@ Protocol каждый раз при вызове. Это метод, котор�
 серверам на нашей стороне  
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-client-2/get-poetry.py#L110}{следующим образом}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 factory = PoetryClientFactory(len(addresses))
 
 from twisted.internet import reactor
@@ -301,7 +301,7 @@ from twisted.internet import reactor
 for address in addresses:
     host, port = address
     reactor.connectTCP(host, port, factory)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %The connectTCP method is the one to focus on. The first two arguments should be self-explanatory. The third is an instance of our PoetryClientFactory class. This is the Protocol Factory for poetry clients and passing it to the reactor allows Twisted to create instances of our PoetryProtocol on demand.
 
@@ -337,26 +337,26 @@ for address in addresses:
 метода в базовом классе из нашего   
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-client-2/get-poetry.py#L79}{подкласса}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def buildProtocol(self, address):
     proto = ClientFactory.buildProtocol(self, address)
     proto.task_num = self.task_num
     self.task_num += 1
     return proto
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %How does the base class know what Protocol to build? Notice we are also setting the class attribute protocol on PoetryClientFactory:
 
 Как базовый класс узнает какой Protocol создать? Заметьте, что 
 мы также устанавливаем атрибут класса protocol в PoetryClientFactory:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class PoetryClientFactory(ClientFactory):
 
     task_num = 1
 
     protocol = PoetryProtocol # tell base class what proto to build
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %The base Factory class implements buildProtocol by instantiating the class we set on protocol (i.e., PoetryProtocol) and setting the factory attribute on that new instance to be a reference to its “parent” Factory. This is illustrated in Figure 8:
 
@@ -422,12 +422,12 @@ transport и устанавливает атрибут connected в значен
 Ключевой метод для обработки приходящих данных - dataReceived, 
 который наш клиент реализовывает следующим образом:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def dataReceived(self, data):
     self.poem += data
     msg = 'Task %d: got %d bytes of poetry from %s'
     print  msg % (self.task_num, len(data), self.transport.getHost())
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %Each time dataReceived is called we get a new sequence of bytes (data) in the form of a string. As always with asynchronous I/O, we don’t know how much data we are going to get so we have to buffer it until we receive a complete protocol message. In our case, the poem isn’t finished until the connection is closed, so we just keep adding the bytes to our .poem attribute.
 
@@ -457,25 +457,25 @@ def dataReceived(self, data):
 twisted-client-2/get-poetry-stack.py. Это тоже самое, что и клиент 2.0, за 
 исключением того, что метод dataReceived изменен следующим образом: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def dataReceived(self, data):
     traceback.print_stack()
     os._exit(0)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %With this change the program will print a stack trace and then quit the first time it receives some data. You could run this version like so:
 С этим изменением программа будет печатать stack trace и затем 
 завершится сразу после получения некоторых данных. Вы можете 
 запустить эту версию следующим образом:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-client-2/get-poetry-stack.py 10000
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %And you will get a stack trace like this:
 И вы получите следующий stack trace:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 File "twisted-client-2/get-poetry-stack.py", line 125, in
     poetry_main()
 
@@ -485,7 +485,7 @@ File ".../twisted/internet/tcp.py", line 463, in doRead  # Note the doRead callb
     return self.protocol.dataReceived(data)
 File "twisted-client-2/get-poetry-stack.py", line 58, in dataReceived
     traceback.print_stack()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %There’s the doRead callback we used in client 1.0! As we noted before, Twisted builds new abstractions by using the old ones, not by replacing them. So there is still an IReadDescriptor implementation hard at work, it’s just implemented by Twisted instead of our code. If you are curious, Twisted’s implementation is in twisted.internet.tcp. If you follow the code, you’ll find that the same object implements IWriteDescriptor and ITransport too. So the IReadDescriptor is actually the Transport object in disguise. We can visualize a dataReceived callback with Figure 10:
 
@@ -510,13 +510,13 @@ dataReceived callback как на рисунке \ref{fig:reactor-data-received}
 Сразу же, когда поэма скачалась, объект PoetryProtocol сообщает 
 об этом PoetryClientFactory:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def connectionLost(self, reason):
     self.poemReceived(self.poem)
 
 def poemReceived(self, poem):
     self.factory.poem_finished(self.task_num, poem)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %The connectionLost callback is invoked when the transport’s connection is closed. The reason argument is a twisted.python.failure.Failure object with additional information on whether the connection was closed cleanly or due to an error. Our client just ignores this value and assumes we received the entire poem.
 
@@ -535,13 +535,13 @@ factory останавливает reactor после того, как все п
 менее переиспользуемыми. Мы исправим это в следующей главе, но заметьте 
 то, как poem\_finished callback сохраняет количество оставшихся поэм:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 ...
     self.poetry_count -= 1
 
     if self.poetry_count == 0:
         ...
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %If we were writing a multi-threaded program where each poem was downloaded in a separate thread we would need to protect this section of code with a lock in case two or more threads invoked poem_finished at the same time. Otherwise we might end up shutting down the reactor twice (and getting a traceback for our troubles). But with a reactive system we needn’t bother. The reactor can only make one callback at a time, so this problem just can’t happen.
 
@@ -561,11 +561,11 @@ poem\_finished в одно и то же время. Иначе, мы могли 
 изящнее, чем в клиент 1.0. Следующий callback в 
 классе PoetryClientFactory делает это:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def clientConnectionFailed(self, connector, reason):
     print 'Failed to connect to:', connector.getDestination()
     self.poem_finished()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %Note the callback is on the factory, not on the protocol. Since a protocol is only created after a connection is made, the factory gets the news when a connection cannot be established.
 

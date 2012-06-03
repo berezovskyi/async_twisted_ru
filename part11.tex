@@ -20,13 +20,13 @@ Twisted, расположенный в \href{http://github.com/jdavisp3/twisted-
 
 Давайте рассмотрим куски кода сервера один за другим. Сначала, PoetryProtocol:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class PoetryProtocol(Protocol):
 
     def connectionMade(self):
         self.transport.write(self.factory.poem)
         self.transport.loseConnection()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Подобно клиенту, сервер использует экземпляр класса Protocol 
@@ -51,14 +51,14 @@ class PoetryProtocol(Protocol):
 Как вы видите, Protocol получает текст поэмы из Factory, 
 поэтому давайте это будет следующее, на что мы посмотрим:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class PoetryFactory(ServerFactory):
 
     protocol = PoetryProtocol
 
     def __init__(self, poem):
         self.poem = poem
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Теперь это ужасно просто. Реальной работой Factory, помимо создания 
@@ -79,7 +79,7 @@ class PoetryFactory(ServerFactory):
 
 Далее функция main, в которой мы вызваем listenTCP: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def main():
     options, poetry_file = parse_args()
 
@@ -95,7 +95,7 @@ def main():
     print 'Serving %s on %s.' % (poetry_file, port.getHost())
 
     reactor.run()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Тут происходит в основном три вещи:

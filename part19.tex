@@ -88,7 +88,7 @@ Twisted развивающийся проект и разработчики Twis
 \href{http://twistedmatrix.com/trac/wiki/Downloads}{Twisted версии 10.1.0 или выше}.  
 Рассмотрим \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-cancel/defer-cancel-1.py#L1}{deferred-cancel/defer-cancel-1.py}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def callback(res):
@@ -98,7 +98,7 @@ d = defer.Deferred()
 d.addCallback(callback)
 d.cancel()
 print 'done'
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 С новым свойством аннулирования, класс Deferred имеет новый 
@@ -106,12 +106,12 @@ print 'done'
 добавляется callback и затем вызывается функция cancel без 
 активизации deferred'а.  Далее вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 done
 Unhandled error in Deferred:
 Traceback (most recent call last):
 Failure: twisted.internet.defer.CancelledError:
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Таким образом аннулирование deferred'а вызывает запуск 
@@ -121,7 +121,7 @@ Failure: twisted.internet.defer.CancelledError:
 был аннулирован. Давайте добавим errback в 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-cancel/defer-cancel-2.py#L1}{deferred-cancel/defer-cancel-2.py}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def callback(res):
@@ -134,15 +134,15 @@ d = defer.Deferred()
 d.addCallbacks(callback, errback)
 d.cancel()
 print 'done'
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Теперь мы получаем следующий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 errback got: [Failure instance: Traceback (failure with no frames): 
 <class 'twisted.internet.defer.CancelledError'>:]
 done
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 То есть мы можем поймать аннулирование в errback'е подобно тому, как 
 возникновление обычной ошибки в deferred'е.
@@ -153,7 +153,7 @@ done
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-cancel/defer-cancel-3.py#L1}{deferred-cancel/defer-cancel-3.py}:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def callback(res):
@@ -167,16 +167,16 @@ d.addCallbacks(callback, errback)
 d.callback('result')
 d.cancel()
 print 'done'
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Здесь мы активизировали deferred обычным образом 
 методом callback и затем его деактивизировали. Далее вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 callback got: result
 done
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Наш callback был вызван (так как мы и ожидали), и 
@@ -190,7 +190,7 @@ done
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-cancel/defer-cancel-4.py#L1}{deferred-cancel/defer-cancel-4.py}?
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def callback(res):
@@ -204,15 +204,15 @@ d.addCallbacks(callback, errback)
 d.cancel()
 d.callback('result')
 print 'done'
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 В этом случае мы получаем следующий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 errback got: [Failure instance: Traceback (failure with no frames): 
 <class 'twisted.internet.defer.CancelledError'>:]
 done
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Та же выдача, что и во втором примере, где мы никогда не 
@@ -272,7 +272,7 @@ deferred? Ответ - с помощью callback'а.
 Взглянем на 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-cancel/defer-cancel-5.py#L1}{deferred-cancel/defer-cancel-5.py}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def canceller(d):
@@ -288,7 +288,7 @@ d = defer.Deferred(canceller) # created by lower-level code
 d.addCallbacks(callback, errback) # added by higher-level code
 d.cancel()
 print 'done'
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Этот код в основном подобен второму примеру, 
@@ -305,12 +305,12 @@ canceller - необходимая часть низкоуровневого к�
 
 Запущенный пример производит вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 I need to cancel this deferred: <Deferred at 0xb7669d2cL>
 errback got: [Failure instance: Traceback (failure with no frames): 
 <class 'twisted.internet.defer.CancelledError'>:]
 done
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Как вы видите, callback canceller вызывается deferred'ом при
@@ -340,7 +340,7 @@ canceller, активизируем его и отменим. Пример ко�
 отменять эту операцию. Рассмотрим код 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-cancel/defer-cancel-9.py#L1}{deferred-cancel/defer-cancel-9.py}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet.defer import Deferred
 
 def send_poem(d):
@@ -370,7 +370,7 @@ def main():
     reactor.run()
 
 main()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Этот пример включает функцию get\_poem, которая использует метод 
@@ -384,28 +384,28 @@ reactor через 10 секунд (снова используя callLater). О
 
 Запуск примера производит следующий вывод (после соответсвующей задержки):
 
- \begin{scriptsize}\begin{verbatim}
+  \begin{verbatim}
 Sending poem
 I got a poem: Once upon a midnight dreary
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 После 10 секунд наша маленькая программа завершается. Теперь 
 давайте попробуем отменить deferred до того, как отправится поэма. 
 Мы добавим небольшой код для отмены deferred'а через 2 минуты:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
     reactor.callLater(2, d.cancel) # cancel after 2 seconds
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Исходники нового примера находятся в 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-cancel/defer-cancel-10.py#L1}{deferred-cancel/defer-cancel-10.py}, при запуске получаем вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 get_poem failed: [Failure instance: Traceback (failure with no frames): 
 <class 'twisted.internet.defer.CancelledError'>:]
 Sending poem
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Этот пример ясно иллюстрирует, что отмена deferred'f 
@@ -435,7 +435,7 @@ cancel, который мы можем использовать для того,
 Обновленный код находится в \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-cancel/defer-cancel-11.py#L1}{deferred-cancel/defer-cancel-11.py}. Значимые изменения находятся в 
 функции get\_poem:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def get_poem():
     """Return a poem 5 seconds later."""
 
@@ -455,7 +455,7 @@ def get_poem():
     delayed_call = reactor.callLater(5, send_poem, d)
 
     return d
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 В этой новой версии, мы сохраняем возвращаемое значение 
@@ -465,10 +465,10 @@ def get_poem():
 ранее, мы могли бы также выбрать активизацию deferred'а. 
 Последняя версия нашего примера выводит:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 get_poem failed: [Failure instance: Traceback (failure with no frames): 
 <class 'twisted.internet.defer.CancelledError'>:]
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Как видите, deferred отменился и асинхронная 
@@ -486,7 +486,7 @@ get_poem failed: [Failure instance: Traceback (failure with no frames):
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-4/poetry-proxy.py#L1}{twisted-server-4/poetry-proxy.py} и реализует отмену deferred'ов. Первое изменение в 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-4/poetry-proxy.py#L52}{PoetryProxyProtocol}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class PoetryProxyProtocol(Protocol):
 
     def connectionMade(self):
@@ -498,7 +498,7 @@ class PoetryProxyProtocol(Protocol):
         if self.deferred is not None:
             deferred, self.deferred = self.deferred, None
             deferred.cancel() # cancel the deferred if it hasn't fired
-\end{verbatim}\end{scriptsize} 
+\end{verbatim}  
 
 Вы можете сравнить со 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-2/poetry-proxy.py#L52}{старой версией}. Два основных изменения:
@@ -517,7 +517,7 @@ class PoetryProxyProtocol(Protocol):
 действительно прерывает скачивание поэмы. Для этого мы должны 
 изменить \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-4/poetry-proxy.py#L105}{ProxyService}: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class ProxyService(object):
 
     poem = None # the cached poem
@@ -548,7 +548,7 @@ class ProxyService(object):
     def set_poem(self, poem):
         self.poem = poem
         return poem
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Можно сравнить со 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-2/poetry-proxy.py#100}{старой версией}. 
@@ -589,31 +589,31 @@ canceler реализован как замыкание. Замыкания ка
 Он должен быть медленным для того, чтобы мы действительно имели 
 время отменить:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python blocking-server/slowpoetry.py --port 10001 poetry/fascination.txt
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Теперь мы можем запустить наш прокси (потребуется Twisted 10.1.0 или выше):
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-server-4/poetry-proxy.py --port 10000 10001
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Теперь мы можем начать скачивать поэму из сервера, используя любой 
 клиент, или даже curl:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 curl localhost:10000
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Через несколько секунд нажмите Ctrl-C для того, чтобы остановить 
 клиент или curl процесс. В терминале, где запущен прокси, вы должны 
 увидеть следующий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Fetching poem from server.
 Canceling poem download.
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Также вы должны увидеть, что медленный сервер 
@@ -659,7 +659,7 @@ deferred'а. Что происходит, если высокоуровневы�
 Рассмотрим код в 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/deferred-cancel/defer-cancel-12.py#L1}{deferred-cancel/defer-cancel-12.py}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 from twisted.internet import defer
 
 def cancel_outer(d):
@@ -693,20 +693,20 @@ print 'canceling outer deferred.'
 outer_d.cancel()
 
 print 'done'
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 В этом примере мы создали два deferred'а, внешний и внутренний, 
 один внешний сallback возвращает внутренний deferred. Сначала активизируется 
 внешний deferred, затем он отменяется. Пример печатает следующий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 first outer callback, returning inner deferred
 canceling outer deferred.
 inner cancel callback.
 outer errback got: [Failure instance: Traceback (failure with no frames): 
 <class 'twisted.internet.defer.CancelledError'>:]
 done
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 % As you can see, canceling the outer deferred does not cause the outer cancel callback to fire. Instead, it cancels the inner deferred so the inner cancel callback fires, and then outer errback receives the CancelledError (from the inner deferred).
 

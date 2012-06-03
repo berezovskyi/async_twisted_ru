@@ -13,21 +13,21 @@ Twisted используется в основном для написания �
 можно найти в 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-client-1/get-poetry.py}{twisted-client-1/get-poetry.py}. Сначала нужно запустить поэтические сервера:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python blocking-server/slowpoetry.py --port 10000 poetry/ecstasy.txt --num-bytes 30
 python blocking-server/slowpoetry.py --port 10001 poetry/fascination.txt
 python blocking-server/slowpoetry.py --port 10002 poetry/science.txt
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Затем запустите клиент следующим образом:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-client-1/get-poetry.py 10000 10001 10002
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 И получится следующий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Task 1: got 60 bytes of poetry from 127.0.0.1:10000
 Task 2: got 10 bytes of poetry from 127.0.0.1:10001
 Task 3: got 10 bytes of poetry from 127.0.0.1:10002
@@ -39,7 +39,7 @@ Task 1: 3003 bytes of poetry
 Task 2: 623 bytes of poetry
 Task 3: 653 bytes of poetry
 Got 3 poems in 0:00:10.134220
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Также как мы это делали для нашего асинхронного клиента, 
 не использующего Twisted. И это неудивительно, что клиент 
@@ -61,11 +61,11 @@ Twisted клиент начинается с создания множества
 PoetrySocket инициализирует себя сам созданием сетевого 
 сокета, соединенного с сервером и выставленного в неблокирующий режим: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 self.sock.connect(address)
 self.sock.setblocking(0)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Конечно, в дальнейшем мы будет иметь дело с 
@@ -74,11 +74,11 @@ self.sock.setblocking(0)
 После создания сетевого соединения, PoetrySocket подставляет 
 себя в reactor через метод addReader:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 # tell the Twisted reactor to monitor this socket for reading
 from twisted.internet import reactor
 reactor.addReader(self)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Этот метод дает Twisted файловый дескриптор, который он должен 
 проверить на предмет приходящих данных. Почему мы передаем 
@@ -117,7 +117,7 @@ Python программистом, вы несомненно знакомы с
 \href{http://twistedmatrix.com/trac/browser/tags/releases/twisted-8.2.0/twisted/internet/interfaces.py#L801}{IReactorFDSet} интерфейсе и должен быть таким:
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def addReader(reader):
     """
     I add reader to the set of file descriptors to get read events for.
@@ -128,7 +128,7 @@ def addReader(reader):
 
     @return: C{None}.
     """
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 IReactorFDSet - это один из интерфейсов, которые реализуют 
@@ -178,14 +178,14 @@ addReader должен реализовывать интерфейс
 
 Давайте просмотрим модуль и найдем в нем этот интерфейс:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class IReadDescriptor(IFileDescriptor):
 
     def doRead():
         """
         Some data is available for reading on your descriptor.
         """
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Реализацию 
@@ -208,7 +208,7 @@ Twisted - вместо того, чтобы передать функцию, в�
 IReadDescriptor должен также реализовывать IFileDescriptor. 
 И, если вы посмотрите в модуль, то найдете:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class IFileDescriptor(ILoggingContext):
     """
     A file descriptor.
@@ -219,7 +219,7 @@ class IFileDescriptor(ILoggingContext):
 
     def connectionLost(reason):
         ...
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Комментарии выше немного урезаны, но из названия понятно, что 
 метод fileno возвращает файловый дескриптор, который нам 
@@ -282,13 +282,13 @@ doRead callback - самый важный callback. Twisted
 
 Теперь попробуем запустить сломанный клиент:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-client-1/get-poetry-broken.py 10000 10001 10002
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Получится примерно такой вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 Task 1: got 3003 bytes of poetry from 127.0.0.1:10000
 Task 3: got 653 bytes of poetry from 127.0.0.1:10002
 Task 2: got 623 bytes of poetry from 127.0.0.1:10001
@@ -296,7 +296,7 @@ Task 1: 3003 bytes of poetry
 Task 2: 623 bytes of poetry
 Task 3: 653 bytes of poetry
 Got 3 poems in 0:00:10.132753
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Несмотря на порядок задач, вывод похож на тот, что был 

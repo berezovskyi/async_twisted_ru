@@ -51,9 +51,9 @@ Twisted включает поддержку нескольких протокр�
 наш собственный скромный протокол. Давайте, клиент будет отправлять 
 строку в форме (без угловых скобок):
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 <название преобразования>.<текст поэмы>
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Это только название преобразования с последующей точкой и 
@@ -75,12 +75,12 @@ netstring. Поскольку netstring'и хранят длину строки,
 расположенного в \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-1/tranformedpoetry.py#L1}{twisted-server-1/tranformedpoetry.py}. Сначала мы определяем 
 класс \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-1/tranformedpoetry.py#L41}{TransformService}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class TransformService(object):
 
     def cummingsify(self, poem):
         return poem.lower()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Трансформирующий сервис на данный момент поддерживает 
@@ -97,7 +97,7 @@ class TransformService(object):
 Теперь давайте посмотрим на 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-1/tranformedpoetry.py#L67}{protocol factory} (мы будем смотреть на протокол после):
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class TransformFactory(ServerFactory):
 
     protocol = TransformProtocol
@@ -118,7 +118,7 @@ class TransformFactory(ServerFactory):
 
     def xform_cummingsify(self, poem):
         return self.service.cummingsify(poem)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Данная factory предоставляет метод transform, который 
@@ -145,7 +145,7 @@ API, предоставленную сервисным объектом.
 Теперь мы посмотрим на 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-1/tranformedpoetry.py#L47}{реализацию протокола}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class TransformProtocol(NetstringReceiver):
 
     def stringReceived(self, request):
@@ -164,7 +164,7 @@ class TransformProtocol(NetstringReceiver):
             self.sendString(new_poem)
 
         self.transport.loseConnection()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %In the protocol implementation we take advantage of the fact that Twisted supports netstrings via the NetstringReceiver protocol. That base class takes care of decoding (and encoding) the netstrings and all we have to do is implement the stringReceived method. In other words, stringReceived is called with the content of a netstring sent by the client, without the extra bytes added by the netstring encoding. The base class also takes care of buffering the incoming bytes until we have enough to decode a complete string.
 
@@ -209,21 +209,21 @@ xformRequestReceived, который вызывается с двумя неза
 будет кодирован как netstring). Допустим, что вы запустили 
 трансформирующий сервер на порту $11000$:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-server-1/tranformedpoetry.py --port 11000
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Тестирующий скрипт можно запустить так:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 ./twisted-server-1/transform-test 11000
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 И вы увидите примерно следующее:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 15:here is my poem,
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Это трансформированная поэма в виде netstring (оригинальная в верхнем регистре).
 

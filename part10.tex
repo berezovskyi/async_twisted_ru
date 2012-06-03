@@ -12,10 +12,10 @@ Cummingsifier - алгоритм, который на вход берет поэ
 поэму в стиле \href{http://en.wikipedia.org/wiki/E.\_E.\_Cummings}{e.e.cummings}.
 Далее алгоритм, который выполняет преoбразование:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def cummingsify(poem):
     return poem.lower()
-\end{verbatim}\end{scriptsize} 
+\end{verbatim}  
 
 К сожалению, этот алгоритм очень простой и, реально нем никогда не произойдет ошибки, 
 поэтому в клиенте 5.0, расположенном в 
@@ -35,7 +35,7 @@ cummingsify, которая произвольно выполняет следу
 
 Изменения в клиенте 5.0 также сделаны в функции poetry\_main:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def poetry_main():
     addresses = parse_args()
 
@@ -73,7 +73,7 @@ def poetry_main():
         d.addBoth(poem_done)
 
     reactor.run()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Таким образом, когда программа скачивает поэму c сервера, она будет 
@@ -251,7 +251,7 @@ errback управлять ошибкой, нам нужно сделать та
 и генерировала бы исключение CannotCummingsify. С нашей новой 
 структурой, функция poetry\_main выглядит так:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 def poetry_main():
     addresses = parse_args()
 
@@ -285,7 +285,7 @@ def poetry_main():
         d.addErrback(cummingsify_failed)
         d.addCallbacks(got_poem, poem_failed)
         d.addBoth(poem_done)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 И каждый deferred имеет структуру как на рисунке \ref{fig:deferred-9}:
  
@@ -299,13 +299,13 @@ def poetry_main():
 
 Исследуем cummingsify\_failed errback:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
     def cummingsify_failed(err):
         if err.check(CannotCummingsify):
             print 'Cummingsify failed!'
             return err.value.args[0]
         return err
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %We are using the check method on Failure objects to test whether the exception embedded in the Failure is an instance of CannotCummingsify. If so, we return the first argument to the exception (the original poem) and thus handle the error. Since the return value is not a Failure, control returns to the callback line. Otherwise, we return the Failure itself and send (re-raise) the error down the errback line. As you can see, the exception is available as the value attribute on the Failure.
 
@@ -366,10 +366,10 @@ def poetry_main():
 Для начала, эта программа может представлять случай, где функция try\_to\_cummingsify 
 успешно завершается в клиенте 5.0: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 r poem p
 r None r None
 r None r None
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 \end{enumerate}

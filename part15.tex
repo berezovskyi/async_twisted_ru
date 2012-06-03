@@ -48,7 +48,7 @@
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/tests/test\_poetry.py#L70}{setUp} 
 в качестве нашего testcase'а:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class PoetryTestCase(TestCase):
 
     def setUp(self):
@@ -56,7 +56,7 @@ class PoetryTestCase(TestCase):
         from twisted.internet import reactor
         self.port = reactor.listenTCP(0, factory, interface="127.0.0.1")
         self.portnum = self.port.getHost().port
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 %The setUp method makes a poetry server with a test poem, and listens on a random, open port. We save the port number so the actual tests can use it, if they need to. And, of course, we clean up the test server in tearDown when the test is done:
@@ -68,18 +68,18 @@ class PoetryTestCase(TestCase):
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/tests/test\_poetry.py#L76}{tearDown}, 
 когда тесты завершены:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
     def tearDown(self):
         port, self.port = self.port, None
         return port.stopListening()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 В нашем первом тесте 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/tests/test\_poetry.py#L80}{test\_client} 
 мы используем get\_poetry для того, чтобы получить поэму 
 из тестового сервера, и проверяем, что это та самая поэма, которую мы ожидаем:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
     def test_client(self):
         """The correct poem is returned by get_poetry."""
         d = get_poetry('127.0.0.1', self.portnum)
@@ -91,7 +91,7 @@ class PoetryTestCase(TestCase):
 
         return d
 
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Заметим, что наша тестовая функция возвращает deferred. 
@@ -119,14 +119,14 @@ callback. Это означает, что reactor выполняется и  м�
 определенным образом, если мы не можем соединиться 
 с сервером:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
     def test_failure(self):
         """The correct failure is returned by get_poetry when
         connecting to a port with no server."""
         d = get_poetry('127.0.0.1', -1)
         return self.assertFailure(d, ConnectionRefusedError)
 
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Здесь мы пытаемся подсоединиться к невалидному 
@@ -141,9 +141,9 @@ callback. Это означает, что reactor выполняется и  м�
 вы можете самостоятельно запускать тесты, используя скрипт trial 
 следующим образом:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 trial tests/test_poetry.py
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 И вы увидете некоторый вывод, показывающий 

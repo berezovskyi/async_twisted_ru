@@ -71,7 +71,7 @@ Twisted программах. Два основных метода IService -
 \href{http://twistedmatrix.com/trac/browser/tags/releases/twisted-10.0.0/twisted/application/service.py#L130}{startService} и 
 \href{http://twistedmatrix.com/trac/browser/tags/releases/twisted-10.0.0/twisted/application/service.py#L135}{stopService}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
     def startService():
         """
         Start the service.
@@ -87,7 +87,7 @@ Twisted программах. Два основных метода IService -
             value can be returned (usually, C{None}).
         """
 
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Что эти методы делают будет зависеть от сервиса. Например, 
 метод startService может любое из:
@@ -128,7 +128,7 @@ Twisted предоставляет готовые сервисы, которые
 смотреть - 
 \href{http://twistedmatrix.com/trac/browser/tags/releases/twisted-10.0.0/twisted/application/service.py#L107}{setServiceParent}, добавляет Service в коллекцию:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
     def setServiceParent(parent):
         """
         Set the parent of the service.
@@ -138,7 +138,7 @@ Twisted предоставляет готовые сервисы, которые
             or if the service has a name and the parent already has a child
             by that name.
         """
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Любой сервис может иметь родительский, что означает, что 
@@ -212,7 +212,7 @@ basic-twisted/log.py, и вы можете просмотреть интерес
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-3/fastpoetry.py#L1}{twisted-server-3/fastpoetry.py}. Сначала мы посмотрим на 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-3/fastpoetry.py#L9}{PoetryProtocol}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class PoetryProtocol(Protocol):
 
     def connectionMade(self):
@@ -222,7 +222,7 @@ class PoetryProtocol(Protocol):
         self.transport.write(poem)
         self.transport.loseConnection()
 
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %Notice instead of using a print statement, we’re using the twisted.python.log.msg function to record each new connection.
 Заметьте, что вместо использования оператора print, 
@@ -230,14 +230,14 @@ class PoetryProtocol(Protocol):
 записи каждого соединения.
 Далее класс \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-3/fastpoetry.py#L19}{PoetryFactory}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class PoetryFactory(ServerFactory):
 
     protocol = PoetryProtocol
 
     def __init__(self, service):
         self.service = service
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 %As you can see, the poem is no longer stored on the factory, but on a service object referenced by the factory. Notice how the protocol gets the poem from the service via the factory. Finally, here’s the service class itself:
 
@@ -247,7 +247,7 @@ class PoetryFactory(ServerFactory):
 поэму из service через factory. Наконец, далее сам 
 \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-3/fastpoetry.py#L27}{сервисный класс}:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class PoetryService(service.Service):
 
     def __init__(self, poetry_file):
@@ -257,7 +257,7 @@ class PoetryService(service.Service):
         service.Service.startService(self)
         self.poem = open(self.poetry_file).read()
         log.msg('loaded a poem from: %s' % (self.poetry_file,))
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Так же как и с другими многочисленными классами Interface, 
@@ -317,12 +317,12 @@ tac файлы обычно не содержат кода общего назн
 tac файл сконфигурирован для обслуживания poetry/ecstasy.txt на 
 порту 10000 loopback интерфейса:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 # configuration parameters
 port = 10000
 iface = 'localhost'
 poetry_file = 'poetry/ecstasy.txt'
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Заметим, что twistd ничего не знает об этих переменных, 
@@ -331,10 +331,10 @@ poetry_file = 'poetry/ecstasy.txt'
 только об одной переменной во всем файле, как мы это вскоре поймем. 
 Далее мы \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-3/fastpoetry.py#L44}{начинаем} построение нашего приложения:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 # this will hold the services that combine to form the poetry server
 top_service = service.MultiService()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Наш поэтический сервер состоит из двух 
@@ -352,12 +352,12 @@ MultiService запустит оба дочерних сервиса, когда
 MultiService сам запустится, и остановит их, когда сам остановится. 
 Давайте добавим наш первый поэтический сервис в коллекцию:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 # the poetry service holds the poem. it will load the poem when it is
 # started
 poetry_service = PoetryService(poetry_file)
 poetry_service.setServiceParent(top_service)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Эта достаточно удобная вещь. Мы только создаем 
@@ -365,13 +365,13 @@ PoetryService и затем добавляем его в коллекцию,
 используя setServiceParent, который унаследован из 
 базового класса Twisted. Затем мы \href{http://github.com/jdavisp3/twisted-intro/blob/master/twisted-server-3/fastpoetry.py#L53}{слушаем} TCP сокет:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 # the tcp service connects the factory to a listening socket. it will
 # create the listening socket when it is started
 factory = PoetryFactory(poetry_service)
 tcp_service = internet.TCPServer(port, factory, interface=iface)
 tcp_service.setServiceParent(top_service)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Twisted предоставляет сервис TCPServer для создания 
@@ -396,13 +396,13 @@ Twisted предоставляет сервис TCPServer для создани�
 в коллекцию. Теперь мы только сделаем Application и 
 добавим нашу коллекцию в него:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 # this variable has to be named 'application'
 application = service.Application("fastpoetry")
 
 # this hooks the collection we made to the application
 top_service.setServiceParent(application)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Единственная переменная в этом скрипте, которая 
@@ -433,9 +433,9 @@ twistd найдет приложение, которое предполагае�
 Давайте сначала запустим tac файл без twistd, 
 просто используя интерпретатор Python и посмотрим, что получается:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 python twisted-server-3/fastpoetry.py
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Если вы сделаете это, вы обнаружите, что ничего не произошло! 
@@ -448,21 +448,21 @@ python twisted-server-3/fastpoetry.py
 
 Давайте запустим наш сервер по-настоящему, используя twistd:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 twistd --nodaemon --python twisted-server-3/fastpoetry.py
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 После запуска такой команды вы увидите похожий вывод:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 2010-06-23 20:57:14-0700 [-] Log opened.
 2010-06-23 20:57:14-0700 [-] twistd 10.0.0 (/usr/bin/python 2.6.5) starting up.
 2010-06-23 20:57:14-0700 [-] reactor class: twisted.internet.selectreactor.SelectReactor.
 2010-06-23 20:57:14-0700 [-] __builtin__.PoetryFactory starting on 10000
 2010-06-23 20:57:14-0700 [-] Starting factory <__builtin__.PoetryFactory instance at 0x14ae8c0>
 2010-06-23 20:57:14-0700 [-] loaded a poem from: poetry/ecstasy.txt
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Здесь нужно отметить несколько вещей:
 
@@ -488,16 +488,16 @@ tac файлов.
 Теперь протестируем сервер путем скачивания поэмы одним из 
 наших поэтических клиентов или даже netcat'м:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 netcat localhost 10000
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Такая команда должна скачать поэму из сервера, и вы 
 увидите новую запись в логе подобную такой: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 2010-06-27 22:17:39-0700 [__builtin__.PoetryFactory] sending 3003 bytes of poetry to IPv4Address(TCP, '127.0.0.1', 58208)
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Эта запись появляется в результате вызова log.msg в 
@@ -507,13 +507,13 @@ PoetryProtocol.connectionMade. Если вы сделаете еще запро�
 
 Теперь остановим сервер, нажав Ctrl-C. вы должны увидеть строки подобные:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 ^C2010-06-29 21:32:59-0700 [-] Received SIGINT, shutting down.
 2010-06-29 21:32:59-0700 [-] (Port 10000 Closed)
 2010-06-29 21:32:59-0700 [-] Stopping factory <__builtin__.PoetryFactory instance at 0x28d38c0>
 2010-06-29 21:32:59-0700 [-] Main loop terminated.
 2010-06-29 21:32:59-0700 [-] Server Shut Down.
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Как вы видите, Twisted не просто разрушается, а завершает сам 
@@ -523,9 +523,9 @@ PoetryProtocol.connectionMade. Если вы сделаете еще запро�
 
 Хорошо, теперь запустим сервер еще раз:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 twistd --nodaemon --python twisted-server-3/fastpoetry.py
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Откройте другую консоль и зайдите в директорию twisted-intro. 
@@ -533,9 +533,9 @@ twistd --nodaemon --python twisted-server-3/fastpoetry.py
 twistd и содержит идентификатор процесса нашего запущенного 
 сервера. Попробуйте запустить эту команду для завершения сервера: 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 kill `cat twistd.pid`
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Заметьте, что twistd стирает файл с pid'м, когда наш сервис завершается.
 
@@ -547,9 +547,9 @@ kill `cat twistd.pid`
 демон, который даже проще сделать, поскольку 
 по умолчанию twistd демонизирует процесс:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 twistd --python twisted-server-3/fastpoetry.py
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 На этот раз мы сразу же получаем командную строку обратно. 
@@ -581,9 +581,9 @@ twistd --python twisted-server-3/fastpoetry.py
 даже если вы отлогинетесь. Но мы все еще можем использовать 
 файл twistd.pid, чтобы остановить процесс:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 kill `cat twistd.pid`
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 И когда это происходит, то в логе появляются 
@@ -633,13 +633,13 @@ twistd может автоматически распознать и
 запустить сейчас вне директории twisted-intro. 
 После раздела с помощью, вы увидите вывод подобный:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
     ...
     ftp                An FTP server.
     telnet             A simple, telnet-based remote debugging service.
     socks              A SOCKSv4 proxy service.
     ...
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Каждая строка показывает один из встроенных плагинов из Twisted. 
@@ -650,9 +650,9 @@ twistd может автоматически распознать и
 можете изучить, используя опицию --help. Давайте посмотрим, 
 какие опции имеет плагин ftp:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 twistd ftp --help
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Заметим, что нужно поместить опцию --help после команды 
 ftp, поскольку вам нужны опции ftp, а не опции twistd.
@@ -660,9 +660,9 @@ ftp, поскольку вам нужны опции ftp, а не опции twi
 как мы запускали наш поэтический сервер. Но, поскольку это 
 плагин, то мы запускаем его по его названию:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 twistd --nodaemon ftp --port 10001
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Эта команда запускает ftp плагин в недемонизированном виде 
@@ -745,7 +745,7 @@ tac файл. И так же как и раньше, этот код обычн�
 
 Далее идет объявление комнадных опций плагина:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class Options(usage.Options):
 
     optParameters = [
@@ -753,7 +753,7 @@ class Options(usage.Options):
         ['poem', None, None, 'The file containing the poem.'],
         ['iface', None, 'localhost', 'The interface to listen on.'],
         ]
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Этот код определяет опции, специфичные для плагина, которые 
@@ -763,7 +763,7 @@ class Options(usage.Options):
 перейдем к основной части нашего плагина - классу PoetryServiceMaker: 
 
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 class PoetryServiceMaker(object):
 
     implements(service.IServiceMaker, IPlugin)
@@ -784,7 +784,7 @@ class PoetryServiceMaker(object):
         tcp_service.setServiceParent(top_service)
 
         return top_service
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Здесь вы видите как функция zope.interface.implements используется для 
@@ -799,9 +799,9 @@ application, и twistd позаботится обо всем остальном
 После объявления класса, осталась только одна вещь, которую надо 
 сделать:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 service_maker = PoetryServiceMaker()
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Скрипт twistd обнаружит экземпляр нашего плагина и использует 
@@ -825,17 +825,17 @@ service_maker = PoetryServiceMaker()
 Теперь давайте получим некоторую помощь по использованию 
 нашего плагина:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 twistd fastpoetry --help
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Вы увидите опции, специфичные для плагина fastpoetry в тексте 
 помощи. И наконец, давайте запустим наш плагин:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 twistd fastpoetry --port 10000 --poem poetry/ecstasy.txt
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 
 Эта команда запустит сервер fastpoetry как демон. 
@@ -843,9 +843,9 @@ twistd fastpoetry --port 10000 --poem poetry/ecstasy.txt
 twistd.log в текущей директории. После тестирования 
 нашего сервера, вы можете остановить его:
 
-\begin{scriptsize}\begin{verbatim}
+ \begin{verbatim}
 kill `cat twistd.pid`
-\end{verbatim}\end{scriptsize}
+\end{verbatim} 
 
 Вот как создавать Twisted плагины.
 
